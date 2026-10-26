@@ -69,6 +69,7 @@ export default function PublicationsList({ config, publications, embedded = fals
     const [showFilters, setShowFilters] = useState(false);
     const [expandedCardId, setExpandedCardId] = useState<string | null>(null);
     const [expandedBibtexId, setExpandedBibtexId] = useState<string | null>(null);
+    const [expandedVideoId, setExpandedVideoId] = useState<string | null>(null);
     const [copiedApaId, setCopiedApaId] = useState<string | null>(null);
 
     // const years = useMemo(() => {
@@ -357,17 +358,20 @@ export default function PublicationsList({ config, publications, embedded = fals
                                                         </a>
                                                     )}
                                                     {pub.video && (
-                                                        <a
-                                                            href={pub.video}
-                                                            target="_blank"
-                                                            rel="noopener noreferrer"
-                                                            className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-md text-xs font-medium bg-accent text-white hover:bg-accent/90 transition-colors"
+                                                        <button
+                                                            onClick={() => setExpandedVideoId(expandedVideoId === pub.id ? null : pub.id)}
+                                                            className={cn(
+                                                                "inline-flex items-center gap-1.5 px-4 py-1.5 rounded-md text-xs font-medium transition-colors",
+                                                                expandedVideoId === pub.id
+                                                                    ? "bg-neutral-700 text-white"
+                                                                    : "bg-accent text-white hover:bg-accent/90"
+                                                            )}
                                                             data-umami-event="view-video"
                                                             data-umami-event-title={pub.title}
                                                         >
                                                             <VideoCameraIcon className="h-3.5 w-3.5" />
-                                                            View Video
-                                                        </a>
+                                                            {expandedVideoId === pub.id ? "Hide Video" : "View Video"}
+                                                        </button>
                                                     )}
                                                     <button
                                                         onClick={() => {
@@ -398,6 +402,29 @@ export default function PublicationsList({ config, publications, embedded = fals
                                                         </button>
                                                     )}
                                                 </div>
+
+                                                {/* Video panel */}
+                                                <AnimatePresence>
+                                                    {expandedVideoId === pub.id && pub.video && (
+                                                        <motion.div
+                                                            initial={{ opacity: 0, height: 0 }}
+                                                            animate={{ opacity: 1, height: 'auto' }}
+                                                            exit={{ opacity: 0, height: 0 }}
+                                                            className="overflow-hidden"
+                                                            onClick={e => e.stopPropagation()}
+                                                        >
+                                                            <div className="relative w-full aspect-video rounded-lg overflow-hidden border border-neutral-200 dark:border-neutral-700 bg-black">
+                                                                <iframe
+                                                                    src={pub.video.replace(/\/view.*$/, '/preview')}
+                                                                    title={`Video: ${pub.title}`}
+                                                                    allow="autoplay; fullscreen"
+                                                                    allowFullScreen
+                                                                    className="absolute inset-0 w-full h-full"
+                                                                />
+                                                            </div>
+                                                        </motion.div>
+                                                    )}
+                                                </AnimatePresence>
 
                                                 {/* BibTeX panel */}
                                                 <AnimatePresence>
