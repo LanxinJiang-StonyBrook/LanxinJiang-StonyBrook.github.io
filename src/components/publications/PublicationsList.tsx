@@ -11,6 +11,7 @@ import {
     ClipboardDocumentIcon,
     ChevronDownIcon,
     ArrowTopRightOnSquareIcon,
+    VideoCameraIcon,
 } from '@heroicons/react/24/outline';
 import { Publication } from '@/types/publication';
 import { PublicationPageConfig } from '@/types/page';
@@ -353,6 +354,19 @@ export default function PublicationsList({ config, publications, embedded = fals
                                                         >
                                                             <ArrowTopRightOnSquareIcon className="h-3.5 w-3.5" />
                                                             View Paper
+                                                        </a>
+                                                    )}
+                                                    {pub.video && (
+                                                        <a
+                                                            href={pub.video}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-md text-xs font-medium bg-accent text-white hover:bg-accent/90 transition-colors"
+                                                            data-umami-event="view-video"
+                                                            data-umami-event-title={pub.title}
+                                                        >
+                                                            <VideoCameraIcon className="h-3.5 w-3.5" />
+                                                            View Video
                                                         </a>
                                                     )}
                                                     <button

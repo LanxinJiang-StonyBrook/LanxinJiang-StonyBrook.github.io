@@ -90,6 +90,7 @@ export function parseBibTeX(bibtexContent: string, locale?: string): Publication
       doi: tags.doi,
       url: tags.url,
       code: tags.code,
+      video: tags.video,
       abstract: cleanBibTeXString(tags.abstract),
       description: cleanBibTeXString(tags.description || tags.note),
       selected,
@@ -97,7 +98,7 @@ export function parseBibTeX(bibtexContent: string, locale?: string): Publication
       preview,
 
       // Store original BibTeX (excluding custom fields), unless nobibtex is set
-      bibtex: nobibtex ? undefined : reconstructBibTeX(entry, ['selected', 'preview', 'description', 'keywords', 'code', 'nobibtex', 'order']),
+      bibtex: nobibtex ? undefined : reconstructBibTeX(entry, ['selected', 'preview', 'description', 'keywords', 'code', 'video', 'nobibtex', 'order']),
     };
 
     // Clean up undefined fields

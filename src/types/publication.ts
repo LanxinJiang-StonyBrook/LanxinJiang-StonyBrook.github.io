@@ -27,6 +27,7 @@ export interface Publication {
   pmid?: string;
   url?: string;
   code?: string;
+  video?: string;
   pdfUrl?: string;
   tags: string[];
   keywords?: string[];
