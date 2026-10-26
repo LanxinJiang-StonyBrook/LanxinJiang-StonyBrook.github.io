@@ -413,15 +413,13 @@ export default function PublicationsList({ config, publications, embedded = fals
                                                             className="overflow-hidden"
                                                             onClick={e => e.stopPropagation()}
                                                         >
-                                                            <div className="relative w-full aspect-video rounded-lg overflow-hidden border border-neutral-200 dark:border-neutral-700 bg-black">
-                                                                <iframe
-                                                                    src={pub.video.replace(/\/view.*$/, '/preview')}
-                                                                    title={`Video: ${pub.title}`}
-                                                                    allow="autoplay; fullscreen"
-                                                                    allowFullScreen
-                                                                    className="absolute inset-0 w-full h-full"
-                                                                />
-                                                            </div>
+                                                            <video
+                                                                src={pub.video}
+                                                                controls
+                                                                preload="metadata"
+                                                                playsInline
+                                                                className="w-full aspect-video rounded-lg border border-neutral-200 dark:border-neutral-700 bg-black"
+                                                            />
                                                         </motion.div>
                                                     )}
                                                 </AnimatePresence>
